@@ -192,9 +192,10 @@ public class SecurityConfig {
 
         // React frontend
         configuration.setAllowedOrigins(
-                List.of(
-                        "http://localhost:5173"
-                )
+        		List.of(
+        		        "http://localhost:5173",
+        		        "https://food-hub-six-indol.vercel.app"
+        		    )
         );
 
         // HTTP methods
