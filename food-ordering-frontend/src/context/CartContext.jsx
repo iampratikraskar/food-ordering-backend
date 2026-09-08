@@ -1,104 +1,233 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import api from "../api/axios";
+import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 
-    const [cartItems, setCartItems] = useState(() => {
-        const savedCart = localStorage.getItem("foodhub_cart");
+    const { isAuthenticated, isAdmin } = useAuth();
 
-        return savedCart ? JSON.parse(savedCart) : [];
-    });
+    const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [loading, setLoading] = useState(false);
 
-    // Save cart whenever it changes
-    useEffect(() => {
-        localStorage.setItem(
-            "foodhub_cart",
-            JSON.stringify(cartItems)
-        );
-    }, [cartItems]);
+    // Update cart state from backend response
+    const updateCartState = (cart) => {
+        setCartItems(cart?.items || []);
+        setTotalPrice(cart?.totalPrice || 0);
+    };
 
+    // Fetch cart from backend
+    const fetchCart = async () => {
 
-    // Add food to cart
-    const addToCart = (food) => {
+        if (!isAuthenticated || isAdmin) {
+            setCartItems([]);
+            setTotalPrice(0);
+            return;
+        }
 
-        setCartItems((currentItems) => {
+        try {
 
-            const existingItem = currentItems.find(
-                (item) => item.id === food.id
-            );
+            setLoading(true);
 
-            if (existingItem) {
+            const response = await api.get("/cart");
 
-                return currentItems.map((item) =>
-                    item.id === food.id
-                        ? {
-                              ...item,
-                              quantity: item.quantity + 1,
-                          }
-                        : item
+            updateCartState(response.data);
+
+        } catch (error) {
+
+            if (error.response?.status === 404) {
+                setCartItems([]);
+                setTotalPrice(0);
+            } else {
+                console.error(
+                    "Failed to fetch cart:",
+                    error.response?.data || error.message
                 );
             }
 
-            return [
-                ...currentItems,
-                {
-                    ...food,
-                    quantity: 1,
-                },
-            ];
-        });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch cart whenever authentication changes
+    useEffect(() => {
+        fetchCart();
+    }, [isAuthenticated , isAdmin]);
+
+
+    // Add food to cart
+    const addToCart = async (food) => {
+
+        if (!isAuthenticated) {
+            throw new Error("Please login to add items to cart.");
+        }
+
+        if( isAdmin) {
+            throw new Error("Admins cannot add items to cart.");
+        }
+
+        try {
+
+            setLoading(true);
+
+            const response = await api.post("/cart/add", {
+                foodId: food.id,
+                quantity: 1
+            });
+
+            updateCartState(response.data);
+
+        } catch (error) {
+
+            console.error(
+                "Failed to add item to cart:",
+                error.response?.data || error.message
+            );
+
+            throw error;
+
+        } finally {
+            setLoading(false);
+        }
     };
 
 
     // Increase quantity
-    const increaseQuantity = (foodId) => {
+    const increaseQuantity = async (itemId) => {
 
-        setCartItems((currentItems) =>
-            currentItems.map((item) =>
-                item.id === foodId
-                    ? {
-                          ...item,
-                          quantity: item.quantity + 1,
-                      }
-                    : item
-            )
+        const item = cartItems.find(
+            (cartItem) => cartItem.id === itemId
         );
+
+        if (!item) {
+            console.error("Cart item not found:", itemId);
+            return;
+        }
+
+        try {
+
+            setLoading(true);
+
+            const response = await api.put("/cart/update", {
+                itemId: item.id,
+                quantity: item.quantity + 1
+            });
+
+            updateCartState(response.data);
+
+        } catch (error) {
+
+            console.error(
+                "Failed to increase quantity:",
+                error.response?.data || error.message
+            );
+
+            throw error;
+
+        } finally {
+            setLoading(false);
+        }
     };
 
 
     // Decrease quantity
-    const decreaseQuantity = (foodId) => {
+    const decreaseQuantity = async (itemId) => {
 
-        setCartItems((currentItems) =>
-            currentItems
-                .map((item) =>
-                    item.id === foodId
-                        ? {
-                              ...item,
-                              quantity: item.quantity - 1,
-                          }
-                        : item
-                )
-                .filter((item) => item.quantity > 0)
+        const item = cartItems.find(
+            (cartItem) => cartItem.id === itemId
         );
+
+        if (!item) {
+            console.error("Cart item not found:", itemId);
+            return;
+        }
+
+        // If quantity is 1, remove the item
+        if (item.quantity <= 1) {
+            await removeFromCart(item.id);
+            return;
+        }
+
+        try {
+
+            setLoading(true);
+
+            const response = await api.put("/cart/update", {
+                itemId: item.id,
+                quantity: item.quantity - 1
+            });
+
+            updateCartState(response.data);
+
+        } catch (error) {
+
+            console.error(
+                "Failed to decrease quantity:",
+                error.response?.data || error.message
+            );
+
+            throw error;
+
+        } finally {
+            setLoading(false);
+        }
     };
 
 
-    // Remove item completely
-    const removeFromCart = (foodId) => {
+    // Remove item
+    const removeFromCart = async (itemId) => {
 
-        setCartItems((currentItems) =>
-            currentItems.filter(
-                (item) => item.id !== foodId
-            )
-        );
+        try {
+
+            setLoading(true);
+
+            const response = await api.delete(
+                `/cart/remove/${itemId}`
+            );
+
+            updateCartState(response.data);
+
+        } catch (error) {
+
+            console.error(
+                "Failed to remove item:",
+                error.response?.data || error.message
+            );
+
+            throw error;
+
+        } finally {
+            setLoading(false);
+        }
     };
 
 
-    // Clear entire cart
-    const clearCart = () => {
-        setCartItems([]);
+    // Clear cart
+    const clearCart = async () => {
+
+        try {
+
+            setLoading(true);
+
+            const response = await api.delete("/cart/clear");
+
+            updateCartState(response.data);
+
+        } catch (error) {
+
+            console.error(
+                "Failed to clear cart:",
+                error.response?.data || error.message
+            );
+
+            throw error;
+
+        } finally {
+            setLoading(false);
+        }
     };
 
 
@@ -109,25 +238,19 @@ export const CartProvider = ({ children }) => {
     );
 
 
-    // Total price
-    const totalPrice = cartItems.reduce(
-        (total, item) =>
-            total + item.price * item.quantity,
-        0
-    );
-
-
     return (
         <CartContext.Provider
             value={{
                 cartItems,
+                totalItems,
+                totalPrice,
+                loading,
+                fetchCart,
                 addToCart,
                 increaseQuantity,
                 decreaseQuantity,
                 removeFromCart,
-                clearCart,
-                totalItems,
-                totalPrice,
+                clearCart
             }}
         >
             {children}

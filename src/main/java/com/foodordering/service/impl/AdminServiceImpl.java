@@ -5,66 +5,67 @@ import org.springframework.stereotype.Service;
 import com.foodordering.dto.DashboardDto;
 import com.foodordering.entity.OrderStatus;
 import com.foodordering.repository.CustomerRepository;
-import com.foodordering.repository.FoodRepository;
 import com.foodordering.repository.OrderRepository;
 import com.foodordering.repository.RestaurantRepository;
 import com.foodordering.service.AdminService;
 
 @Service
-public class AdminServiceImpl implements AdminService{
-	
-	private final CustomerRepository customerRepository;
-	private final RestaurantRepository restaurantRepository;
-	private final FoodRepository foodRepository;
-	private final OrderRepository orderRepository;
-	
-	public AdminServiceImpl(
-	        CustomerRepository customerRepository,
-	        RestaurantRepository restaurantRepository,
-	        FoodRepository foodRepository,
-	        OrderRepository orderRepository) {
+public class AdminServiceImpl implements AdminService {
 
-	    this.customerRepository = customerRepository;
-	    this.restaurantRepository = restaurantRepository;
-	    this.foodRepository = foodRepository;
-	    this.orderRepository = orderRepository;
-	}
+    private final CustomerRepository customerRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final OrderRepository orderRepository;
 
-	@Override
-	public DashboardDto getDashboard() {
+    public AdminServiceImpl(
+            CustomerRepository customerRepository,
+            RestaurantRepository restaurantRepository,
+            OrderRepository orderRepository) {
 
-	    DashboardDto dto = new DashboardDto();
+        this.customerRepository = customerRepository;
+        this.restaurantRepository = restaurantRepository;
+        this.orderRepository = orderRepository;
+    }
 
-	    dto.setTotalCustomers(customerRepository.count());
+    @Override
+    public DashboardDto getDashboard() {
 
-	    dto.setTotalRestaurants(restaurantRepository.count());
+        DashboardDto dto = new DashboardDto();
 
-	    dto.setTotalFoods(foodRepository.count());
+        // Total customers
+        dto.setTotalCustomers(
+                customerRepository.count());
 
-	    dto.setTotalOrders(orderRepository.count());
+        // Total restaurants
+        dto.setTotalRestaurants(
+                restaurantRepository.count());
 
-	    dto.setPendingOrders(
-	            orderRepository.countByStatus(OrderStatus.PENDING));
+        // Total orders
+        dto.setTotalOrders(
+                orderRepository.count());
 
-	    dto.setConfirmedOrders(
-	            orderRepository.countByStatus(OrderStatus.CONFIRMED));
+        // Orders by status
+        dto.setPendingOrders(
+                orderRepository.countByStatus(OrderStatus.PENDING));
 
-	    dto.setPreparingOrders(
-	            orderRepository.countByStatus(OrderStatus.PREPARING));
+        dto.setConfirmedOrders(
+                orderRepository.countByStatus(OrderStatus.CONFIRMED));
 
-	    dto.setOutForDeliveryOrders(
-	            orderRepository.countByStatus(OrderStatus.OUT_FOR_DELIVERY));
+        dto.setPreparingOrders(
+                orderRepository.countByStatus(OrderStatus.PREPARING));
 
-	    dto.setDeliveredOrders(
-	            orderRepository.countByStatus(OrderStatus.DELIVERED));
+        dto.setOutForDeliveryOrders(
+                orderRepository.countByStatus(OrderStatus.OUT_FOR_DELIVERY));
 
-	    dto.setCancelledOrders(
-	            orderRepository.countByStatus(OrderStatus.CANCELLED));
+        dto.setDeliveredOrders(
+                orderRepository.countByStatus(OrderStatus.DELIVERED));
 
-	    dto.setTotalRevenue(
-	            orderRepository.getTotalRevenue());
+        dto.setCancelledOrders(
+                orderRepository.countByStatus(OrderStatus.CANCELLED));
+        
+        Double totalRevenue = orderRepository.getTotalRevenue(OrderStatus.DELIVERED);
+        
+        dto.setTotalRevenue(totalRevenue);
 
-	    return dto;
-	}
-
+        return dto;
+    }
 }

@@ -1,5 +1,8 @@
 package com.foodordering.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -51,6 +54,8 @@ public class CustomerDto {
 	@NotBlank(message = "Full name is required")
     private String fullName;
 
+	
+	@NotBlank(message = "Email is required")
     @Email(message = "Invalid email")
     private String email;
 
@@ -60,6 +65,7 @@ public class CustomerDto {
     private String phone;
 
     @NotBlank(message = "Password is required")
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
     public CustomerDto() {

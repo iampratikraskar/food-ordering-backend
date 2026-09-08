@@ -23,3 +23,6 @@ Thumbs.db
 
 # Environment files
 .env
+
+food-ordering-frontend/node_modules/
+food-ordering-frontend/dist/

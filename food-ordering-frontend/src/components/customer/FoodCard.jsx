@@ -1,51 +1,52 @@
-import React from "react";
 import { useCart } from "../../context/CartContext";
 
 const FoodCard = ({ food }) => {
 
-    const { addToCart } = useCart();
+    const {
+        addToCart,
+        loading
+    } = useCart();
 
+    const handleAddToCart = async () => {
 
-    const handleAddToCart = () => {
+        try {
 
-        addToCart(food);
+            await addToCart(food);
 
+            alert(`${food.name} added to cart!`);
+
+        } catch (error) {
+
+            alert(
+                error.response?.data?.message ||
+                error.message ||
+                "Failed to add item to cart."
+            );
+
+        }
     };
 
-
     return (
-        <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+        <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100">
 
-            {/* Image */}
-            <div className="h-52 bg-orange-100 overflow-hidden">
+            {/* Food Image */}
+            <div className="h-48 bg-gradient-to-r from-orange-300 to-orange-500 flex items-center justify-center">
 
                 {food.imageUrl ? (
-
                     <img
                         src={food.imageUrl}
                         alt={food.name}
-                        className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                        onError={(event) => {
-                            event.currentTarget.style.display = "none";
-                            event.currentTarget.parentElement.innerHTML =
-                                '<div class="w-full h-full flex items-center justify-center text-7xl">🍽️</div>';
-                        }}
+                        className="w-full h-full object-cover"
                     />
-
                 ) : (
-
-                    <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-7xl">
-                            🍽️
-                        </span>
-                    </div>
-
+                    <span className="text-7xl">
+                        🍕
+                    </span>
                 )}
 
             </div>
 
-
-            {/* Content */}
+            {/* Food Details */}
             <div className="p-5">
 
                 <div className="flex justify-between items-start gap-3">
@@ -54,54 +55,51 @@ const FoodCard = ({ food }) => {
                         {food.name}
                     </h2>
 
+                    <span className="text-lg font-bold text-orange-500 whitespace-nowrap">
+                        ₹{food.price}
+                    </span>
+
+                </div>
+
+                {/* Description */}
+                {food.description && (
+                    <p className="text-gray-500 text-sm mt-3 line-clamp-2">
+                        {food.description}
+                    </p>
+                )}
+
+                {/* Availability */}
+                <div className="mt-4">
 
                     {food.available ? (
-
-                        <span className="bg-green-100 text-green-700 px-2 py-1 rounded-lg text-xs font-semibold whitespace-nowrap">
-                            Available
+                        <span className="text-green-600 text-sm font-semibold">
+                            ● Available
                         </span>
-
                     ) : (
-
-                        <span className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-xs font-semibold whitespace-nowrap">
-                            Unavailable
+                        <span className="text-red-500 text-sm font-semibold">
+                            ● Currently unavailable
                         </span>
-
                     )}
 
                 </div>
 
-
-                {/* Description */}
-                <p className="text-gray-500 text-sm mt-3 line-clamp-2">
-                    {food.description ||
-                        "Delicious food made fresh for you."}
-                </p>
-
-
-                {/* Price + Add */}
-                <div className="flex justify-between items-center mt-5">
-
-                    <p className="text-2xl font-bold text-orange-500">
-                        ₹{food.price}
-                    </p>
-
-
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={!food.available}
-                        className={`px-4 py-2 rounded-lg font-semibold transition ${
-                            food.available
-                                ? "bg-orange-500 text-white hover:bg-orange-600"
-                                : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                        }`}
-                    >
-                        {food.available
-                            ? "+ Add"
-                            : "Unavailable"}
-                    </button>
-
-                </div>
+                {/* Add to Cart */}
+                <button
+                    onClick={handleAddToCart}
+                    disabled={!food.available || loading}
+                    className={`w-full mt-4 py-3 rounded-xl font-semibold transition ${
+                        food.available && !loading
+                            ? "bg-orange-500 text-white hover:bg-orange-600"
+                            : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    }`}
+                >
+                    {loading
+                        ? "Adding..."
+                        : food.available
+                            ? "🛒 Add to Cart"
+                            : "Unavailable"
+                    }
+                </button>
 
             </div>
 

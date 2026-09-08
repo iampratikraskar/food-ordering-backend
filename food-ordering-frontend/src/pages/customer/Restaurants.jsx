@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllRestaurants } from "../../services/restaurantService";
 import RestaurantCard from "../../components/customer/RestaurantCard";
+import getErrorMessage from "../../utils/errorHandler";
 
 const Restaurants = () => {
     const [restaurants, setRestaurants] = useState([]);
@@ -16,7 +17,13 @@ const Restaurants = () => {
             } catch (error) {
                 console.error("Error fetching restaurants:", error);
 
-                setError("Failed to load restaurants.");
+                // setError("Failed to load restaurants.");
+                setError(
+                    getErrorMessage(
+                        error,
+                        "Failed to load restaurants."
+                    )
+                );
             } finally {
                 setLoading(false);
             }

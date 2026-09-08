@@ -2,175 +2,498 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+
     const categories = [
-        { name: "Pizza", emoji: "🍕" },
-        { name: "Burger", emoji: "🍔" },
-        { name: "Biryani", emoji: "🍛" },
-        { name: "Chinese", emoji: "🍜" },
-        { name: "Desserts", emoji: "🍰" },
-        { name: "Drinks", emoji: "🥤" },
+        { name: "Pizza", emoji: "🍕", description: "Cheesy & delicious" },
+        { name: "Burger", emoji: "🍔", description: "Juicy & tasty" },
+        { name: "Biryani", emoji: "🍛", description: "Rich & flavorful" },
+        { name: "Chinese", emoji: "🍜", description: "Hot & delicious" },
+        { name: "Desserts", emoji: "🍰", description: "Sweet cravings" },
+        { name: "Drinks", emoji: "🥤", description: "Cool & refreshing" },
+    ];
+
+    const features = [
+        {
+            icon: "🚀",
+            title: "Lightning Fast",
+            description:
+                "Get your favorite meals delivered quickly and conveniently.",
+        },
+        {
+            icon: "🍽️",
+            title: "Best Restaurants",
+            description:
+                "Discover amazing restaurants and delicious food near you.",
+        },
+        {
+            icon: "🔒",
+            title: "Secure Ordering",
+            description:
+                "Your account, orders and personal information stay protected.",
+        },
+        {
+            icon: "💳",
+            title: "Easy Checkout",
+            description:
+                "Enjoy a simple and smooth checkout experience every time.",
+        },
     ];
 
     return (
         <div className="bg-gray-50 min-h-screen">
 
-            {/* Hero Section */}
-            <section className="bg-orange-500 text-white">
-                <div className="max-w-7xl mx-auto px-6 py-20">
+            {/* =====================================================
+                HERO SECTION
+            ====================================================== */}
 
-                    <div className="grid md:grid-cols-2 gap-10 items-center">
+            <section className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-orange-500 to-orange-600 text-white">
 
-                        {/* Hero Content */}
+                {/* Decorative circles */}
+                <div className="absolute -top-24 -right-24 w-80 h-80 bg-white/10 rounded-full" />
+                <div className="absolute -bottom-32 -left-20 w-96 h-96 bg-white/10 rounded-full" />
+
+                <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28">
+
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+                        {/* LEFT CONTENT */}
+
                         <div>
-                            <p className="text-orange-100 text-lg font-medium mb-3">
-                                Hungry? We've got you covered! 🍴
-                            </p>
 
-                            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                            {/* Small badge */}
+                            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
+
+                                <span className="w-2 h-2 bg-green-300 rounded-full animate-pulse" />
+
+                                Fresh food • Fast delivery
+
+                            </div>
+
+                            <h1 className="text-5xl md:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight">
+
                                 Delicious Food,
+
                                 <br />
-                                Delivered Fast 🚀
+
+                                <span className="text-orange-100">
+                                    Delivered Fast
+                                </span>
+
+                                <span className="ml-2">
+                                    🚀
+                                </span>
+
                             </h1>
 
-                            <p className="mt-6 text-orange-100 text-lg max-w-xl">
+                            <p className="mt-6 text-orange-50 text-lg md:text-xl leading-relaxed max-w-xl">
+
                                 Order your favorite meals from the best
                                 restaurants around you and enjoy delicious
-                                food at your doorstep.
+                                food delivered straight to your doorstep.
+
                             </p>
 
-                            {/* Search */}
-                            <div className="mt-8 flex bg-white rounded-xl p-2 shadow-lg max-w-xl">
-                                <input
-                                    type="text"
-                                    placeholder="Search for food or restaurants..."
-                                    className="flex-1 px-4 py-3 text-gray-700 outline-none"
-                                />
+                            {/* SEARCH */}
 
-                                <button className="bg-orange-600 hover:bg-orange-700 px-6 py-3 rounded-lg font-semibold transition">
-                                    Search
-                                </button>
+                            <div className="mt-8 bg-white rounded-2xl p-2 shadow-2xl max-w-2xl">
+
+                                <div className="flex flex-col sm:flex-row gap-2">
+
+                                    <div className="flex items-center flex-1 px-4">
+
+                                        <span className="text-xl mr-3">
+                                            🔍
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            placeholder="Search for food or restaurants..."
+                                            className="w-full py-3 text-gray-700 outline-none placeholder:text-gray-400"
+                                        />
+
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        className="bg-orange-500 hover:bg-orange-600 text-white px-7 py-3 rounded-xl font-bold transition duration-200"
+                                    >
+                                        Search
+                                    </button>
+
+                                </div>
+
                             </div>
 
-                            {/* CTA */}
-                            <Link
-                                to="/restaurants"
-                                className="inline-block mt-6 bg-white text-orange-600 px-7 py-3 rounded-xl font-bold hover:bg-gray-100 transition"
-                            >
-                                Explore Restaurants →
-                            </Link>
+                            {/* CTA BUTTONS */}
+
+                            <div className="flex flex-col sm:flex-row gap-4 mt-7">
+
+                                <Link
+                                    to="/restaurants"
+                                    className="inline-flex items-center justify-center bg-white text-orange-600 px-7 py-3.5 rounded-xl font-bold shadow-lg hover:bg-gray-100 hover:-translate-y-0.5 transition duration-200"
+                                >
+                                    Explore Restaurants
+                                    <span className="ml-2">
+                                        →
+                                    </span>
+                                </Link>
+
+                                <Link
+                                    to="/restaurants"
+                                    className="inline-flex items-center justify-center border-2 border-white/50 text-white px-7 py-3.5 rounded-xl font-bold hover:bg-white/10 transition duration-200"
+                                >
+                                    Browse Food 🍴
+                                </Link>
+
+                            </div>
+
+                            {/* TRUST TEXT */}
+
+                            <div className="flex flex-wrap items-center gap-5 mt-8 text-orange-100 text-sm">
+
+                                <div className="flex items-center gap-2">
+                                    <span className="text-lg">✓</span>
+                                    Easy ordering
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <span className="text-lg">✓</span>
+                                    Fast delivery
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <span className="text-lg">✓</span>
+                                    Secure checkout
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        {/* Hero Image / Emoji */}
-                        <div className="hidden md:flex justify-center">
-                            <div className="bg-white/20 rounded-full w-80 h-80 flex items-center justify-center">
-                                <span className="text-9xl">
-                                    🍕
-                                </span>
+
+                        {/* RIGHT HERO VISUAL */}
+
+                        <div className="hidden lg:flex justify-center">
+
+                            <div className="relative">
+
+                                {/* Main circle */}
+
+                                <div className="w-[420px] h-[420px] rounded-full bg-white/15 border border-white/20 backdrop-blur-sm flex items-center justify-center shadow-2xl">
+
+                                    <div className="w-[330px] h-[330px] rounded-full bg-white flex items-center justify-center shadow-2xl">
+
+                                        <div className="text-center">
+
+                                            <div className="text-[130px] leading-none">
+                                                🍕
+                                            </div>
+
+                                            <p className="text-gray-800 text-xl font-extrabold mt-4">
+                                                Fresh & Delicious
+                                            </p>
+
+                                            <p className="text-gray-500 text-sm mt-1">
+                                                Delivered to your doorstep
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                {/* Floating card 1 */}
+
+                                <div className="absolute -left-10 top-16 bg-white text-gray-800 rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3">
+
+                                    <div className="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center text-xl">
+                                        ⭐
+                                    </div>
+
+                                    <div>
+                                        <p className="font-bold">
+                                            4.8 / 5
+                                        </p>
+
+                                        <p className="text-xs text-gray-500">
+                                            Customer rating
+                                        </p>
+                                    </div>
+
+                                </div>
+
+
+                                {/* Floating card 2 */}
+
+                                <div className="absolute -right-8 bottom-16 bg-white text-gray-800 rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3">
+
+                                    <div className="w-11 h-11 bg-orange-100 rounded-xl flex items-center justify-center text-xl">
+                                        🚴
+                                    </div>
+
+                                    <div>
+                                        <p className="font-bold">
+                                            Fast Delivery
+                                        </p>
+
+                                        <p className="text-xs text-gray-500">
+                                            Right to your door
+                                        </p>
+                                    </div>
+
+                                </div>
+
                             </div>
+
                         </div>
 
                     </div>
+
                 </div>
+
             </section>
 
-            {/* Categories */}
-            <section className="max-w-7xl mx-auto px-6 py-14">
 
-                <div className="text-center mb-10">
-                    <h2 className="text-3xl font-bold text-gray-800">
-                        Explore Categories
-                    </h2>
+            {/* =====================================================
+                QUICK STATS
+            ====================================================== */}
 
-                    <p className="text-gray-500 mt-2">
-                        What are you craving today?
-                    </p>
+            <section className="max-w-6xl mx-auto px-6 -mt-8 relative z-10">
+
+                <div className="bg-white rounded-2xl shadow-xl border border-gray-100 grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
+
+                    <div className="text-center p-6">
+
+                        <p className="text-3xl font-extrabold text-orange-500">
+                            100+
+                        </p>
+
+                        <p className="text-gray-500 text-sm mt-1">
+                            Food Choices
+                        </p>
+
+                    </div>
+
+                    <div className="text-center p-6">
+
+                        <p className="text-3xl font-extrabold text-orange-500">
+                            50+
+                        </p>
+
+                        <p className="text-gray-500 text-sm mt-1">
+                            Restaurants
+                        </p>
+
+                    </div>
+
+                    <div className="text-center p-6">
+
+                        <p className="text-3xl font-extrabold text-orange-500">
+                            4.8★
+                        </p>
+
+                        <p className="text-gray-500 text-sm mt-1">
+                            Average Rating
+                        </p>
+
+                    </div>
+
+                    <div className="text-center p-6">
+
+                        <p className="text-3xl font-extrabold text-orange-500">
+                            24/7
+                        </p>
+
+                        <p className="text-gray-500 text-sm mt-1">
+                            Easy Ordering
+                        </p>
+
+                    </div>
+
                 </div>
+
+            </section>
+
+
+            {/* =====================================================
+                CATEGORIES
+            ====================================================== */}
+
+            <section className="max-w-7xl mx-auto px-6 py-20">
+
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
+
+                    <div>
+
+                        <p className="text-orange-500 font-bold text-sm uppercase tracking-wider">
+                            Explore
+                        </p>
+
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mt-2">
+                            What are you craving?
+                        </h2>
+
+                        <p className="text-gray-500 mt-2">
+                            Explore our popular food categories.
+                        </p>
+
+                    </div>
+
+                    <Link
+                        to="/restaurants"
+                        className="mt-5 md:mt-0 text-orange-500 font-bold hover:text-orange-600 transition"
+                    >
+                        View Restaurants →
+                    </Link>
+
+                </div>
+
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5">
 
                     {categories.map((category) => (
-                        <div
+
+                        <Link
                             key={category.name}
-                            className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition cursor-pointer"
+                            to="/restaurants"
+                            className="group bg-white rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition duration-300"
                         >
-                            <div className="text-5xl">
-                                {category.emoji}
+
+                            <div className="w-20 h-20 mx-auto bg-orange-50 rounded-full flex items-center justify-center group-hover:bg-orange-100 transition">
+
+                                <span className="text-5xl group-hover:scale-110 transition duration-300">
+                                    {category.emoji}
+                                </span>
+
                             </div>
 
-                            <h3 className="mt-3 font-semibold text-gray-700">
+                            <h3 className="mt-4 font-bold text-gray-800">
                                 {category.name}
                             </h3>
-                        </div>
+
+                            <p className="text-xs text-gray-400 mt-1">
+                                {category.description}
+                            </p>
+
+                        </Link>
+
                     ))}
 
                 </div>
 
             </section>
 
-            {/* Why Choose Us */}
-            <section className="bg-white py-14">
+
+            {/* =====================================================
+                HOW IT WORKS
+            ====================================================== */}
+
+            <section className="bg-white py-20">
 
                 <div className="max-w-7xl mx-auto px-6">
 
-                    <div className="text-center mb-10">
-                        <h2 className="text-3xl font-bold text-gray-800">
-                            Why Choose FoodHub?
+                    <div className="text-center mb-14">
+
+                        <p className="text-orange-500 font-bold text-sm uppercase tracking-wider">
+                            Simple Process
+                        </p>
+
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mt-2">
+                            Order food in 3 easy steps
                         </h2>
 
-                        <p className="text-gray-500 mt-2">
-                            Everything you need for a great food ordering
-                            experience.
+                        <p className="text-gray-500 mt-3">
+                            From craving to doorstep — we've made it simple.
                         </p>
+
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
 
-                        {/* Card 1 */}
-                        <div className="text-center p-8 rounded-2xl bg-orange-50">
-                            <div className="text-5xl mb-4">
-                                🚀
+                    <div className="grid md:grid-cols-3 gap-10">
+
+                        {/* Step 1 */}
+
+                        <div className="text-center">
+
+                            <div className="relative inline-flex">
+
+                                <div className="w-24 h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-5xl">
+                                    🔍
+                                </div>
+
+                                <span className="absolute -top-3 -right-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold">
+                                    1
+                                </span>
+
                             </div>
 
-                            <h3 className="text-xl font-bold text-gray-800">
-                                Fast Delivery
+                            <h3 className="text-xl font-bold text-gray-800 mt-6">
+                                Choose Your Food
                             </h3>
 
-                            <p className="text-gray-500 mt-3">
-                                Get your favorite food delivered quickly
-                                and conveniently.
+                            <p className="text-gray-500 mt-2 max-w-sm mx-auto">
+                                Browse restaurants and discover the food
+                                you're craving.
                             </p>
+
                         </div>
 
-                        {/* Card 2 */}
-                        <div className="text-center p-8 rounded-2xl bg-orange-50">
-                            <div className="text-5xl mb-4">
-                                🍽️
+
+                        {/* Step 2 */}
+
+                        <div className="text-center">
+
+                            <div className="relative inline-flex">
+
+                                <div className="w-24 h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-5xl">
+                                    🛒
+                                </div>
+
+                                <span className="absolute -top-3 -right-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold">
+                                    2
+                                </span>
+
                             </div>
 
-                            <h3 className="text-xl font-bold text-gray-800">
-                                Best Restaurants
+                            <h3 className="text-xl font-bold text-gray-800 mt-6">
+                                Add to Cart
                             </h3>
 
-                            <p className="text-gray-500 mt-3">
-                                Discover delicious food from restaurants
-                                you love.
+                            <p className="text-gray-500 mt-2 max-w-sm mx-auto">
+                                Select your favorite meals and customize
+                                your order.
                             </p>
+
                         </div>
 
-                        {/* Card 3 */}
-                        <div className="text-center p-8 rounded-2xl bg-orange-50">
-                            <div className="text-5xl mb-4">
-                                🔒
+
+                        {/* Step 3 */}
+
+                        <div className="text-center">
+
+                            <div className="relative inline-flex">
+
+                                <div className="w-24 h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-5xl">
+                                    🚴
+                                </div>
+
+                                <span className="absolute -top-3 -right-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold">
+                                    3
+                                </span>
+
                             </div>
 
-                            <h3 className="text-xl font-bold text-gray-800">
-                                Secure Ordering
+                            <h3 className="text-xl font-bold text-gray-800 mt-6">
+                                Enjoy Your Meal
                             </h3>
 
-                            <p className="text-gray-500 mt-3">
-                                Your account and orders are protected with
-                                secure authentication.
+                            <p className="text-gray-500 mt-2 max-w-sm mx-auto">
+                                Place your order and enjoy delicious food
+                                delivered to your doorstep.
                             </p>
+
                         </div>
 
                     </div>
@@ -179,24 +502,94 @@ const Home = () => {
 
             </section>
 
-            {/* Bottom CTA */}
-            <section className="bg-orange-500 text-white py-16">
 
-                <div className="max-w-4xl mx-auto text-center px-6">
+            {/* =====================================================
+                FEATURES
+            ====================================================== */}
 
-                    <h2 className="text-3xl md:text-4xl font-bold">
-                        Ready to order something delicious? 😋
+            <section className="max-w-7xl mx-auto px-6 py-20">
+
+                <div className="text-center mb-12">
+
+                    <p className="text-orange-500 font-bold text-sm uppercase tracking-wider">
+                        Why FoodHub?
+                    </p>
+
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mt-2">
+                        Everything you need for a great food experience
                     </h2>
 
-                    <p className="mt-4 text-orange-100 text-lg">
-                        Find your favorite restaurant and order now.
+                    <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+                        We've designed FoodHub to make discovering and
+                        ordering food simple, fast and enjoyable.
+                    </p>
+
+                </div>
+
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    {features.map((feature) => (
+
+                        <div
+                            key={feature.title}
+                            className="bg-white rounded-2xl p-7 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300"
+                        >
+
+                            <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl">
+                                {feature.icon}
+                            </div>
+
+                            <h3 className="text-xl font-bold text-gray-800 mt-6">
+                                {feature.title}
+                            </h3>
+
+                            <p className="text-gray-500 mt-3 leading-relaxed">
+                                {feature.description}
+                            </p>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+            </section>
+
+
+            {/* =====================================================
+                CTA
+            ====================================================== */}
+
+            <section className="relative overflow-hidden bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+
+                <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full" />
+
+                <div className="absolute -bottom-24 -left-20 w-80 h-80 bg-white/10 rounded-full" />
+
+                <div className="relative max-w-4xl mx-auto text-center px-6 py-20">
+
+                    <div className="text-6xl mb-5">
+                        😋
+                    </div>
+
+                    <h2 className="text-3xl md:text-5xl font-extrabold">
+                        Ready to order something delicious?
+                    </h2>
+
+                    <p className="mt-5 text-orange-100 text-lg max-w-2xl mx-auto">
+                        Find your favorite restaurant, choose your meal and
+                        let FoodHub take care of the rest.
                     </p>
 
                     <Link
                         to="/restaurants"
-                        className="inline-block mt-7 bg-white text-orange-600 px-8 py-3 rounded-xl font-bold hover:bg-gray-100 transition"
+                        className="inline-flex items-center mt-8 bg-white text-orange-600 px-8 py-4 rounded-xl font-extrabold shadow-xl hover:bg-gray-100 hover:-translate-y-1 transition duration-200"
                     >
-                        Order Now
+                        Start Ordering
+                        <span className="ml-2 text-xl">
+                            →
+                        </span>
                     </Link>
 
                 </div>

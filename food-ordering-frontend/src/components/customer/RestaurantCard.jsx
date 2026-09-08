@@ -1,54 +1,54 @@
 import { Link } from "react-router-dom";
 
 const RestaurantCard = ({ restaurant }) => {
+
     return (
-        <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300 group">
+        <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100">
 
-            {/* Image */}
-            <div className="h-48 bg-orange-100 overflow-hidden">
+            {/* Restaurant Header */}
+            <div className="h-40 bg-gradient-to-r from-orange-400 to-orange-600 flex items-center justify-center">
 
-                {restaurant.imageUrl ? (
-                    <img
-                        src={restaurant.imageUrl}
-                        alt={restaurant.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    />
-                ) : (
-                    <div className="w-full h-full flex items-center justify-center text-6xl">
-                        🍽️
-                    </div>
-                )}
+                <span className="text-7xl">
+                    🍽️
+                </span>
 
             </div>
 
-            {/* Content */}
+            {/* Restaurant Information */}
             <div className="p-5">
 
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start gap-3">
 
                     <h2 className="text-xl font-bold text-gray-800">
                         {restaurant.name}
                     </h2>
 
-                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-lg text-sm">
-                        ⭐ 4.5
-                    </span>
+                    {restaurant.rating && (
+                        <span className="bg-green-100 text-green-700 px-2 py-1 rounded-lg text-sm font-semibold whitespace-nowrap">
+                            ⭐ {restaurant.rating}
+                        </span>
+                    )}
 
                 </div>
 
-                <p className="text-gray-500 mt-2">
-                    {restaurant.address}
+                {/* Address */}
+                <p className="text-gray-500 mt-3 text-sm">
+                    📍 {restaurant.address}
                 </p>
 
-                <p className="text-gray-400 text-sm mt-1">
-                    {restaurant.city}
-                </p>
+                {/* Phone */}
+                {restaurant.phone && (
+                    <p className="text-gray-500 mt-2 text-sm">
+                        📞 {restaurant.phone}
+                    </p>
+                )}
 
+                {/* View Menu */}
                 <Link
                     to={`/restaurants/${restaurant.id}/foods`}
-                    className="block text-center mt-5 bg-orange-500 text-white py-2.5 rounded-lg font-semibold hover:bg-orange-600 transition"
+                    className="block text-center mt-5 bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
                 >
-                    View Menu
+                    View Menu →
                 </Link>
 
             </div>
