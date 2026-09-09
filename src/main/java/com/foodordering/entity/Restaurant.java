@@ -1,6 +1,7 @@
 package com.foodordering.entity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,8 @@ public class Restaurant {
     private String address;
     private String phone;
     private double rating;
+    @Column(length = 1000)
+    private String imageUrl;
 
     @JsonManagedReference
     @OneToMany(
@@ -84,5 +87,13 @@ public class Restaurant {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

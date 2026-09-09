@@ -22,9 +22,19 @@ public class Category {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
     
+    @Column(length = 1000)
+    private String imageUrl;
     
 
-    public Category() {
+    public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public Category() {
     }
 
     public Category(Long id, String name, Restaurant restaurant) {

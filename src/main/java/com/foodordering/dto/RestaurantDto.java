@@ -27,19 +27,22 @@ public class RestaurantDto {
     @Min(value = 1, message = "Rating must be at least 1")
     @Max(value = 5, message = "Rating cannot be more than 5")
     private Double rating;
+    
+    private String imageUrl;
 
     public RestaurantDto() {
     }
 
     public RestaurantDto(Long id, String name, String address,
-                         String phone, Double rating) {
+                         String phone, Double rating, String imageUrl) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.rating = rating;
+        this.imageUrl = imageUrl;
     }
-    // Generate Getters and Setters
+
 
 	public Long getId() {
 		return id;
@@ -79,6 +82,14 @@ public class RestaurantDto {
 
 	public void setRating(Double rating) {
 		this.rating = rating;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
     

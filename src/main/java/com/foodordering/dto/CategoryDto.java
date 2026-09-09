@@ -10,14 +10,17 @@ public class CategoryDto {
     private String name;
 
     private Long restaurantId;
+    
+    private String imageUrl;
 
     public CategoryDto() {
     }
 
-    public CategoryDto(Long id, String name, Long restaurantId) {
+    public CategoryDto(Long id, String name, Long restaurantId, String imageUrl) {
         this.id = id;
         this.name = name;
         this.restaurantId = restaurantId;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -42,5 +45,13 @@ public class CategoryDto {
 
     public void setRestaurantId(Long restaurantId) {
         this.restaurantId = restaurantId;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
