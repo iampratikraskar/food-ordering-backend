@@ -15,6 +15,7 @@ public class RestaurantMapper {
         restaurant.setAddress(dto.getAddress());
         restaurant.setPhone(dto.getPhone());
         restaurant.setRating(dto.getRating());
+        restaurant.setImageUrl(dto.getImageUrl());
 
         return restaurant;
     }
@@ -29,6 +30,7 @@ public class RestaurantMapper {
         dto.setAddress(restaurant.getAddress());
         dto.setPhone(restaurant.getPhone());
         dto.setRating(restaurant.getRating());
+        dto.setImageUrl(restaurant.getImageUrl());
 
         return dto;
     }

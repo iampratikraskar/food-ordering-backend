@@ -36,6 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
 
         category.setName(dto.getName());
+        category.setImageUrl(dto.getImageUrl());
         category.setRestaurant(restaurant);
 
         Category saved = categoryRepository.save(category);
@@ -68,6 +69,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         category.setName(dto.getName());
+        category.setImageUrl(dto.getImageUrl());
 
         return CategoryMapper.toDto(categoryRepository.save(category));
     }

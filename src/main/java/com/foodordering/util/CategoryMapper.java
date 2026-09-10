@@ -11,6 +11,7 @@ public class CategoryMapper {
 
         dto.setId(category.getId());
         dto.setName(category.getName());
+        dto.setImageUrl(category.getImageUrl());
 
         if(category.getRestaurant()!=null){
             dto.setRestaurantId(category.getRestaurant().getId());
